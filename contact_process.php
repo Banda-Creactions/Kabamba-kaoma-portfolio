@@ -1,37 +1,38 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Sanitize inputs to prevent security vulnerabilities
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $subject = htmlspecialchars(trim($_POST['subject']));
+    $message = htmlspecialchars(trim($_POST['message']));
 
-    $to = "rockybd1995@gmail.com";
-    $from = $_REQUEST['email'];
-    $name = $_REQUEST['name'];
-    $subject = $_REQUEST['subject'];
-    $number = $_REQUEST['number'];
-    $cmessage = $_REQUEST['message'];
+    // Validate fields
+    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+        echo "<script>alert('All fields are required.'); window.history.back();</script>";
+        exit;
+    }
 
-    $headers = "From: $from";
-	$headers = "From: " . $from . "\r\n";
-	$headers .= "Reply-To: ". $from . "\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Invalid email format.'); window.history.back();</script>";
+        exit;
+    }
 
-    $subject = "You have a message from your Bitmap Photography.";
+    // Prepare email
+    $to = "nchimzy708@gmail.com"; // Replace with your email
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-    $logo = 'img/logo.png';
-    $link = '#';
+    $email_subject = "New Contact Form Submission: $subject";
+    $email_body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
 
-	$body = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><title>Express Mail</title></head><body>";
-	$body .= "<table style='width: 100%;'>";
-	$body .= "<thead style='text-align: center;'><tr><td style='border:none;' colspan='2'>";
-	$body .= "<a href='{$link}'><img src='{$logo}' alt=''></a><br><br>";
-	$body .= "</td></tr></thead><tbody><tr>";
-	$body .= "<td style='border:none;'><strong>Name:</strong> {$name}</td>";
-	$body .= "<td style='border:none;'><strong>Email:</strong> {$from}</td>";
-	$body .= "</tr>";
-	$body .= "<tr><td style='border:none;'><strong>Subject:</strong> {$csubject}</td></tr>";
-	$body .= "<tr><td></td></tr>";
-	$body .= "<tr><td colspan='2' style='border:none;'>{$cmessage}</td></tr>";
-	$body .= "</tbody></table>";
-	$body .= "</body></html>";
-
-    $send = mail($to, $subject, $body, $headers);
-
+    // Send email
+    if (mail($to, $email_subject, $email_body, $headers)) {
+        echo "<script>alert('Your message has been sent successfully.'); window.location.href = 'index.html';</script>";
+    } else {
+        echo "<script>alert('Failed to send your message. Please try again later.'); window.history.back();</script>";
+    }
+} else {
+    echo "<script>alert('Invalid request.'); window.history.back();</script>";
+}
 ?>
