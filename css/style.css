@@ -269,6 +269,10 @@ button:focus {
   .header_area.white_menu.navbar_fixed .main_menu .navbar .nav .nav-item .nav-link {
     line-height: 70px;
     color: #222222; }
+  
+    .lnr-phone-handset{
+      background: 
+    }
 
 .top_menu {
   background: #ec9d5f; }
@@ -299,6 +303,7 @@ button:focus {
 /*----------------------------------------------------*/
 /* Home Banner Area css
 ============================================================================================ */
+
 .home_banner_area {
   z-index: 1;
   background: url(../img/banner/home-banner.jpg) no-repeat scroll center center;
@@ -2561,9 +2566,9 @@ h6 {
 .banner_btn {
   padding: 0px 42px;
   line-height: 50px;
-  background-image: linear-gradient(to right, #8faf8e 0%, #afd7ac 48%, #8faf8e 100%);
+  background-image: linear-gradient(to right, hsla(81, 100%, 91%, 0.607) 0%, #e7f7e6 48%, #dbffd086 100%);
   background-size: 200% auto;
-  color: #3c3c3c;
+  color: #366814;
   display: inline-block;
   border-radius: 5px;
   font-size: 15px;
